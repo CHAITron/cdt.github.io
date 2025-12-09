@@ -32,7 +32,8 @@
         }
 
         .page-container {
-            max-width: 1600px;
+            max-width: 2400px; /* INCREASED WIDTH */
+            width: 98%;        /* Use almost full screen width */
             margin: 20px auto;
             background: white;
             padding: 40px;
@@ -49,12 +50,32 @@
             border-bottom: 2px solid #e0e0e0;
             padding-bottom: 25px; 
             margin-bottom: 30px;
+            gap: 40px; /* More gap */
         }
 
         .header-brand {
             display: flex;
             align-items: center;
             gap: 15px;
+            flex-shrink: 0;
+        }
+
+        /* --- LOGO CONTAINER (DOUBLED SIZE) --- */
+        .logo-container {
+            flex-grow: 1; 
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            padding: 0 20px;
+            height: 160px; /* DOUBLED HEIGHT from 80px */
+        }
+
+        .header-logo {
+            width: 100%;      
+            height: 100%;     
+            max-height: 160px; /* DOUBLED MAX HEIGHT */
+            object-fit: contain; 
+            object-position: center;
         }
 
         .brand-accent {
@@ -73,6 +94,7 @@
             letter-spacing: -0.5px;
             line-height: 1;
             text-transform: uppercase;
+            white-space: nowrap; 
         }
 
         .subtitle-row {
@@ -82,6 +104,7 @@
             font-size: 15px;
             font-weight: 500;
             color: #555;
+            white-space: nowrap;
         }
 
         .cohort-badge {
@@ -106,6 +129,7 @@
             flex-direction: column; 
             align-items: flex-end; 
             gap: 10px; 
+            flex-shrink: 0;
         }
         
         /* INTERACTIVE LEGEND */
@@ -136,13 +160,6 @@
             transform: translateY(-1px);
         }
         
-        /* Active filter state handled by JS */
-        .legend-item.active-filter {
-            background-color: #dbeafe;
-            color: var(--surrey-blue);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        }
-
         .swatch { width: 12px; height: 12px; border-radius: 3px; display: block; }
 
         .btn-print {
@@ -173,10 +190,7 @@
             transition: background-color 0.1s;
         }
         
-        /* HOVER EFFECT: Row Highlight */
-        .week-row:hover {
-            background-color: #fff9e6 !important; /* Very subtle gold tint */
-        }
+        .week-row:hover { background-color: #fff9e6 !important; }
         .week-row:nth-child(even) { background-color: #fafbfd; }
 
         /* --- CELLS --- */
@@ -187,7 +201,6 @@
         }
         .cell:last-child { border-right: none; }
 
-        /* DATE COLUMN */
         .cell-date {
             align-items: center; justify-content: center;
             color: var(--text-light); font-weight: 600; text-align: center;
@@ -195,7 +208,7 @@
         }
         .cell-date span { font-size: 15px; color: var(--surrey-blue); display: block; margin-bottom: 2px; }
 
-        /* --- CARDS & INTERACTIVITY --- */
+        /* --- CARDS --- */
         .card {
             padding: 5px 8px; border-radius: 4px;
             border: 1px solid #e1e1e1; 
@@ -203,25 +216,12 @@
             font-size: 10.5px; line-height: 1.35;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             margin-bottom: 3px; background: white;
-            
-            /* Smooth transitions for hover effects */
             transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
             cursor: default;
         }
 
-        /* HOVER EFFECT: Card Lift */
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            z-index: 10;
-        }
-
-        /* DIMMED STATE (For Filtering) */
-        .card.dimmed {
-            opacity: 0.15;
-            filter: grayscale(100%);
-        }
-
+        .card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); z-index: 10; }
+        .card.dimmed { opacity: 0.15; filter: grayscale(100%); }
         .card strong { display: block; color: #2c3e50; font-weight: 700; }
         .card .time { font-size: 9px; font-weight: 700; color: #555; display: block; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.3px; }
         .card .loc { font-size: 9.5px; font-style: italic; color: #7f8c8d; margin-top: 2px; display: block; }
@@ -239,30 +239,13 @@
             display: inline-block; margin-bottom: 3px;
         }
 
-        /* --- TODAY HIGHLIGHT --- */
+        /* --- TODAY --- */
         @keyframes pulse-border {
             0% { box-shadow: inset 0 0 0 2px var(--surrey-blue); }
             50% { box-shadow: inset 0 0 0 4px #3498db; }
             100% { box-shadow: inset 0 0 0 2px var(--surrey-blue); }
         }
-
-        .cell.is-today {
-            animation: pulse-border 2s infinite;
-            background-color: #fff;
-            z-index: 5;
-        }
-        .cell.is-today::after {
-            content: "TODAY";
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            font-size: 8px;
-            background: var(--surrey-blue);
-            color: white;
-            padding: 1px 4px;
-            border-radius: 2px;
-            font-weight: bold;
-        }
+        .cell.is-today { animation: pulse-border 2s infinite; background-color: #fff; z-index: 5; }
 
         /* Status Cells */
         .cell.holiday {
@@ -270,26 +253,16 @@
             background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.6) 10px, rgba(255,255,255,0.6) 20px);
             align-items: center; justify-content: center; text-align: center; font-weight: bold;
         }
-        .cell.research {
-            color: #d0d3d4; align-items: center; justify-content: center; font-style: italic;
-        }
+        .cell.research { color: #d0d3d4; align-items: center; justify-content: center; font-style: italic; }
 
         /* --- FINAL ROW --- */
         .cell.merged-research {
             grid-column: 2 / span 5; 
-            align-items: center; 
-            justify-content: center;
-            font-size: 14px;
-            font-style: italic;
-            color: #95a5a6;
-            letter-spacing: 0.5px;
-            background: #fafbfd;
+            align-items: center; justify-content: center;
+            font-size: 14px; font-style: italic; color: #95a5a6;
+            letter-spacing: 0.5px; background: #fafbfd;
         }
-        
-        .cell-date.final-date {
-            font-size: 11px;
-            padding: 0 5px;
-        }
+        .cell-date.final-date { font-size: 11px; padding: 0 5px; }
 
         @media print {
             @page { size: A4 landscape; margin: 8mm; }
@@ -301,9 +274,8 @@
             .controls { display: none; } 
             header { border-bottom-width: 2px; margin-bottom: 20px; }
             .card { box-shadow: none; border: 1px solid #ccc; border-left-width: 4px; }
-            /* Disable hover effects for print */
             .week-row:hover { background-color: transparent !important; }
-            .card.dimmed { opacity: 1; filter: none; } /* Ensure everything prints */
+            .card.dimmed { opacity: 1; filter: none; }
             .cell.is-today { animation: none; box-shadow: inset 0 0 0 2px #ccc; }
         }
     </style>
@@ -321,6 +293,10 @@
                     <span class="program-name">AI for Digital Media Inclusion</span>
                 </div>
             </div>
+        </div>
+        
+        <div class="logo-container">
+            <img src="cdt-new-logo-long.png" alt="CDT Logo" class="header-logo" onerror="this.style.display='none'">
         </div>
         
         <div class="controls">
